@@ -1,0 +1,4 @@
+- Alphanumeric passwords support by @justinschw
+- Fix biometrics crashing the app with accessibility service
+- Fix background color of overlay
+- fix accessibility menu in sound bar

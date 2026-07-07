@@ -14,8 +14,8 @@ android {
         applicationId = "dev.pranav.applock"
         minSdk = 26
         targetSdk = 37
-        versionCode = 244
-        versionName = "2.4.4"
+        versionCode = 250
+        versionName = "2.5.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
