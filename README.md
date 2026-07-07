@@ -70,6 +70,7 @@ root required.
 - Fingerprint, Face Unlock, and PIN support
 - Lock any app on your device
 - Anti-uninstall protection
+- Anti-uninstall protection for user apps
 - Unlock timeout for convenience
 - No root required
 - One-tap app locking
