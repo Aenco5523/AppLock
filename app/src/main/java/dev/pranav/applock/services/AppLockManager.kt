@@ -5,6 +5,7 @@ import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
 import dev.pranav.applock.core.utils.LogUtils
+import dev.pranav.applock.services.AppLockAccessibilityService.BiometricState
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -54,7 +55,7 @@ object AppLockManager {
     var temporarilyUnlockedApp: String = ""
     val appUnlockTimes = ConcurrentHashMap<String, Long>()
     val isLockScreenShown = AtomicBoolean(false)
-    var currentBiometricState: Any? = null
+    var currentBiometricState: AppLockAccessibilityService.BiometricState? = null
 
     // Grace period tracking
     private var recentlyLeftApp: String = ""
@@ -105,8 +106,13 @@ object AppLockManager {
         reportBiometricAuthFinished()
     }
 
-    fun reportBiometricAuthStarted() {}
-    fun reportBiometricAuthFinished() {}
+    fun reportBiometricAuthStarted() {
+        currentBiometricState = BiometricState.AUTH_STARTED
+    }
+
+    fun reportBiometricAuthFinished() {
+        currentBiometricState = BiometricState.IDLE
+    }
 
     fun isAppTemporarilyUnlocked(packageName: String): Boolean =
         temporarilyUnlockedApp == packageName

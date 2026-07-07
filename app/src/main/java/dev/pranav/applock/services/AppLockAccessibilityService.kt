@@ -32,8 +32,8 @@ class AppLockAccessibilityService : AccessibilityService() {
     private val appLockRepository: AppLockRepository by lazy { applicationContext.appLockRepository() }
     private val keyboardPackages: List<String> by lazy { getKeyboardPackageNames() }
 
-    private var recentsOpen = false
     private var lastForegroundPackage = ""
+    private var isRecentsOpen: Boolean = false
 
     private var overlayManager: LockScreenOverlayManager? = null
     private lateinit var mainHandler: Handler
@@ -124,30 +124,33 @@ class AppLockAccessibilityService : AccessibilityService() {
             checkForDeviceAdminDeactivation(event)
         }
 
-        // Early return if protection is disabled or service is not running
-        if (!appLockRepository.isProtectEnabled() || !isServiceRunning) {
+        if (!appLockRepository.isProtectEnabled()) {
             return
         }
 
-        // Handle window state changes
+        if (event.eventType == AccessibilityEvent.TYPE_WINDOWS_CHANGED) {
+            Log.d(TAG, "Windows changed event received. Checking recents state.")
+            return
+        }
+
         if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED || event.eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
-            try {
-                handleWindowStateChanged(event)
-            } catch (e: Exception) {
-                logError("Error handling window state change", e)
+            if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED && event.text == packageManager.getApplicationInfo(
+                    event.packageName.toString(),
+                    0
+                ).loadLabel(packageManager)
+            ) {
+                Log.d(TAG, "Ignoring recents bug event: ${event.text}")
                 return
             }
+            if (!isRecentsOpen && isRecentlyOpened(event)) {
+                isRecentsOpen = true
+                Log.d(TAG, "Recents opened")
+            }
+            handleWindowStateChanged(event)
         } else {
             return
         }
 
-        // Skip processing if recents are open
-        if (recentsOpen) {
-            LogUtils.d(TAG, "Recents opened, ignoring accessibility event")
-            return
-        }
-
-        // Extract and validate package name
         val packageName = event.packageName?.toString() ?: return
 
         // Skip if device is locked or app is excluded
@@ -163,31 +166,18 @@ class AppLockAccessibilityService : AccessibilityService() {
     }
 
     private fun handleWindowStateChanged(event: AccessibilityEvent) {
-        val isRecentlyOpened = isRecentlyOpened(event)
         val isHomeScreen = isHomeScreen(event)
 
         when {
-            isRecentlyOpened -> {
-                LogUtils.d(TAG, "Entering recents")
-                recentsOpen = true
-            }
-
-            isHomeScreenTransition(event) && recentsOpen -> {
+            isHomeScreenTransition(event) -> {
                 LogUtils.d(TAG, "Transitioning to home screen from recents")
-                recentsOpen = false
                 clearTemporarilyUnlockedAppIfNeeded()
+                isRecentsOpen = false
             }
 
             isHomeScreen -> {
                 LogUtils.d(TAG, "On home screen")
-                recentsOpen = false
                 clearTemporarilyUnlockedAppIfNeeded()
-            }
-
-            isAppSwitchedFromRecents(event) -> {
-                LogUtils.d(TAG, "App switched from recents")
-                recentsOpen = false
-                clearTemporarilyUnlockedAppIfNeeded(event.packageName?.toString())
             }
         }
     }
@@ -195,7 +185,7 @@ class AppLockAccessibilityService : AccessibilityService() {
     @SuppressLint("InlinedApi")
     private fun isRecentlyOpened(event: AccessibilityEvent): Boolean {
         return (event.packageName == getSystemDefaultLauncherPackageName() &&
-                event.contentChangeTypes == AccessibilityEvent.CONTENT_CHANGE_TYPE_PANE_APPEARED) ||
+                event.contentChangeTypes == AccessibilityEvent.CONTENT_CHANGE_TYPE_PANE_APPEARED) && event.className == "" ||
                 (event.text.toString().lowercase().contains("recent apps"))
     }
 
@@ -209,10 +199,6 @@ class AppLockAccessibilityService : AccessibilityService() {
     private fun isHomeScreenTransition(event: AccessibilityEvent): Boolean {
         return event.contentChangeTypes == AccessibilityEvent.CONTENT_CHANGE_TYPE_PANE_DISAPPEARED &&
                 event.packageName == getSystemDefaultLauncherPackageName()
-    }
-
-    private fun isAppSwitchedFromRecents(event: AccessibilityEvent): Boolean {
-        return event.packageName != getSystemDefaultLauncherPackageName() && recentsOpen
     }
 
     private fun clearTemporarilyUnlockedAppIfNeeded(newPackage: String? = null) {

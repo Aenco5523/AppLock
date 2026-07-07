@@ -28,6 +28,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dev.pranav.applock.core.utils.appLockRepository
 import dev.pranav.applock.data.repository.PreferencesRepository
+import dev.pranav.applock.services.AppLockManager
 import dev.pranav.applock.ui.theme.AppLockTheme
 
 @SuppressLint("ViewConstructor")
@@ -124,7 +125,20 @@ class LockScreenOverlayManager(private val context: Context):
                                         },
                                         lockedAppName = appName,
                                         triggeringPackageName = triggeringPackageName,
-                                        onPatternAttempt = onPatternAttemptCallback
+                                        onPatternAttempt = onPatternAttemptCallback,
+                                        onBiometricAuth = {
+                                            val intent = Intent(
+                                                context,
+                                                TransparentBiometricActivity::class.java
+                                            ).apply {
+                                                flags =
+                                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION
+                                                putExtra("locked_package", lockedPackageName)
+                                            }
+                                            AppLockManager.reportBiometricAuthStarted()
+                                            removeOverlay()
+                                            context.startActivity(intent)
+                                        }
                                     )
                                 }
 
@@ -152,6 +166,8 @@ class LockScreenOverlayManager(private val context: Context):
                                                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION
                                                 putExtra("locked_package", lockedPackageName)
                                             }
+                                            AppLockManager.reportBiometricAuthStarted()
+                                            removeOverlay()
                                             context.startActivity(intent)
                                         },
                                         onPasswordAttempt = onPinAttemptCallback
@@ -182,6 +198,8 @@ class LockScreenOverlayManager(private val context: Context):
                                                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION
                                                 putExtra("locked_package", lockedPackageName)
                                             }
+                                            AppLockManager.reportBiometricAuthStarted()
+                                            removeOverlay()
                                             context.startActivity(intent)
                                         },
                                         onPinAttempt = onPinAttemptCallback
