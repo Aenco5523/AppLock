@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,8 +22,8 @@ import dev.pranav.applock.features.antiuninstall.ui.AntiUninstallScreen
 import dev.pranav.applock.features.appintro.ui.AppIntroScreen
 import dev.pranav.applock.features.applist.ui.MainScreen
 import dev.pranav.applock.features.lockscreen.ui.AlphanumericPasswordOverlayScreen
-import dev.pranav.applock.features.lockscreen.ui.PinPasswordOverlayScreen
 import dev.pranav.applock.features.lockscreen.ui.PatternLockScreen
+import dev.pranav.applock.features.lockscreen.ui.PinPasswordOverlayScreen
 import dev.pranav.applock.features.setpassword.ui.AlphanumericSetPasswordScreen
 import dev.pranav.applock.features.setpassword.ui.PatternSetPasswordScreen
 import dev.pranav.applock.features.setpassword.ui.SetPasswordScreen
@@ -138,6 +139,24 @@ fun AppNavHost(navController: NavHostController, startDestination: String) {
 
         composable(Screen.AntiUninstall.route) {
             AntiUninstallScreen(navController)
+        }
+    }
+}
+
+fun NavController.finishPasswordSetup(isFirstTimeSetup: Boolean) {
+    if (isFirstTimeSetup) {
+        navigate(Screen.Main.route) {
+            popUpTo(Screen.AppIntro.route) {
+                inclusive = true
+            }
+            launchSingleTop = true
+        }
+    } else {
+        navigate(Screen.Main.route) {
+            popUpTo(Screen.Main.route) {
+                inclusive = false
+            }
+            launchSingleTop = true
         }
     }
 }

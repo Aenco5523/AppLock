@@ -43,6 +43,7 @@ import androidx.navigation.NavController
 import dev.pranav.applock.AppLockApplication
 import dev.pranav.applock.R
 import dev.pranav.applock.core.navigation.Screen
+import dev.pranav.applock.core.navigation.finishPasswordSetup
 import dev.pranav.applock.data.repository.PreferencesRepository
 import dev.pranav.applock.features.lockscreen.ui.KeypadRow
 import dev.pranav.applock.features.lockscreen.ui.PasswordIndicators
@@ -355,16 +356,7 @@ fun SetPasswordScreen(
                                                     Toast.LENGTH_SHORT
                                                 ).show()
 
-                                                navController.navigate(Screen.Main.route) {
-                                                    popUpTo(Screen.SetPassword.route) {
-                                                        inclusive = true
-                                                    }
-                                                    if (isFirstTimeSetup) {
-                                                        popUpTo(Screen.AppIntro.route) {
-                                                            inclusive = true
-                                                        }
-                                                    }
-                                                }
+                                                navController.finishPasswordSetup(isFirstTimeSetup)
                                             } else {
                                                 showMismatchError = true
                                                 confirmPasswordState = ""
