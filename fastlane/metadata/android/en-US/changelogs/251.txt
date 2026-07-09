@@ -1,0 +1,2 @@
+* fix previous passwords breaking
+* fix password screen showing again on back press

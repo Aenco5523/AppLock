@@ -1,9 +1,9 @@
 package dev.pranav.applock.data.repository
 
-import dev.pranav.applock.core.utils.SecurityUtils
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import dev.pranav.applock.core.utils.SecurityUtils
 
 /**
  * Repository for managing application preferences and settings.
@@ -27,14 +27,22 @@ class PreferencesRepository(context: Context) {
         return appLockPrefs.getString(KEY_PASSWORD, null)
     }
 
-    fun validatePassword(inputPassword: String): Boolean {
-        val storedSaltedHash = getPassword() ?: return false
-        
-        // If it's a legacy plain text password (doesn't contain ':'), migrate it or validate as is
-        // For simplicity and since this is a new feature, we assume all passwords should be hashed.
-        // If there's an existing plain text password, this will fail validation and require reset.
-        
-        return SecurityUtils.verifyPassword(inputPassword, storedSaltedHash)
+    fun validatePassword(input: String): Boolean {
+        val stored = getPassword()
+        if (stored.isNullOrBlank()) return false
+
+        val sanitizedInput = SecurityUtils.sanitizePassword(input)
+
+        if (SecurityUtils.isSaltedHash(stored)) {
+            return SecurityUtils.verifyPassword(sanitizedInput, stored)
+        }
+
+        if (stored == input || stored == sanitizedInput) {
+            setPassword(sanitizedInput)
+            return true
+        }
+
+        return false
     }
 
     fun setPattern(pattern: String) {
