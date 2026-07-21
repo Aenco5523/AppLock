@@ -15,9 +15,6 @@
   <a href="https://apt.izzysoft.de/packages/dev.pranav.applock">
     <img src="https://img.shields.io/badge/IzzyOnDroid-Available-brightgreen" alt="IzzyOnDroid">
   </a>
-  <a href="https://paypal.me/pranavpurwar">
-    <img src="https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal&logoColor=white" alt="Donate via PayPal">
-  </a>
 </p>
 
 <p align="center">
