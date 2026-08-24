@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="applock_enable"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/routine_enable_short"
+        android:shortcutLongLabel="@string/routine_enable_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="dev.pranav.applock"
+            android:targetClass="dev.pranav.applock.features.routines.RoutineEnableActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="applock_disable"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/routine_disable_short"
+        android:shortcutLongLabel="@string/routine_disable_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="dev.pranav.applock"
+            android:targetClass="dev.pranav.applock.features.routines.RoutineDisableActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>
