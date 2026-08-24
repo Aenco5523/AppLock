@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="routine_enable_short">App Lock 켜기</string>
-    <string name="routine_enable_long">App Lock 잠금 활성화</string>
-    <string name="routine_disable_short">App Lock 끄기</string>
-    <string name="routine_disable_long">App Lock 잠금 비활성화</string>
+    <string name="routine_enable_short">Enable App Lock</string>
+    <string name="routine_enable_long">Enable App Lock protection</string>
+    <string name="routine_disable_short">Disable App Lock</string>
+    <string name="routine_disable_long">Disable App Lock protection</string>
+    <string name="routine_disable_auth_prompt">Enter your App Lock credential to disable protection.</string>
+    <string name="routine_disable_pin_label">PIN</string>
+    <string name="routine_disable_success">App Lock protection disabled</string>
 </resources>
