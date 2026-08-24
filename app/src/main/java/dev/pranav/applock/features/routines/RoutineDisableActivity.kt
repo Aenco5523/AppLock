@@ -50,8 +50,8 @@ import dev.pranav.applock.ui.theme.AppLockTheme
  * Entry point used by Android App Shortcuts / Samsung Modes and Routines to disable protection.
  *
  * This activity is exported so the system can launch the static shortcut. Because any external
- * application could otherwise explicitly invoke an exported activity, disabling protection always
- * requires the user's configured AppLock credential first.
+ * application could explicitly invoke an exported activity, every disable request requires the
+ * user's configured AppLock credential before the protection state can be changed or maintained.
  */
 class RoutineDisableActivity : ComponentActivity() {
 
@@ -59,12 +59,6 @@ class RoutineDisableActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val repository = applicationContext.appLockRepository()
-
-        // Already disabled: there is no additional unlock state to grant.
-        if (!repository.isProtectEnabled()) {
-            finishWithoutAnimation()
-            return
-        }
 
         setContent {
             AppLockTheme {
