@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="routine_enable_short">App Lock 켜기</string>
+    <string name="routine_enable_long">App Lock 잠금 활성화</string>
+    <string name="routine_disable_short">App Lock 끄기</string>
+    <string name="routine_disable_long">App Lock 잠금 비활성화</string>
+</resources>
