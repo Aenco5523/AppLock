@@ -10,7 +10,6 @@
             android:action="android.intent.action.VIEW"
             android:targetPackage="dev.pranav.applock"
             android:targetClass="dev.pranav.applock.features.routines.RoutineEnableActivity" />
-        <categories android:name="android.shortcut.conversation" />
     </shortcut>
 
     <shortcut
@@ -23,6 +22,5 @@
             android:action="android.intent.action.VIEW"
             android:targetPackage="dev.pranav.applock"
             android:targetClass="dev.pranav.applock.features.routines.RoutineDisableActivity" />
-        <categories android:name="android.shortcut.conversation" />
     </shortcut>
 </shortcuts>
