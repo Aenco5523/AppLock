@@ -56,6 +56,7 @@ import dev.pranav.applock.ui.icons.Backspace
 import dev.pranav.applock.ui.icons.Fingerprint
 import dev.pranav.applock.ui.theme.AppLockTheme
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
 
@@ -388,7 +389,7 @@ fun PinPasswordOverlayScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "Close",
+                        contentDescription = stringResource(R.string.close_cd),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
@@ -415,7 +416,7 @@ fun PinPasswordOverlayScreen(
                     ) {
                         Text(
                             text = if (!fromMainActivity && !lockedAppName.isNullOrEmpty())
-                                "Continue to $lockedAppName"
+                                stringResource(R.string.continue_to_app, lockedAppName.orEmpty())
                             else
                                 stringResource(R.string.enter_password_to_continue),
                             style = MaterialTheme.typography.titleLarge,
@@ -485,7 +486,7 @@ fun PinPasswordOverlayScreen(
 
                     Text(
                         text = if (!fromMainActivity && !lockedAppName.isNullOrEmpty())
-                            "Continue to $lockedAppName"
+                            stringResource(R.string.continue_to_app, lockedAppName.orEmpty())
                         else
                             stringResource(R.string.enter_password_to_continue),
                         style = if (!fromMainActivity && !lockedAppName.isNullOrEmpty())
@@ -960,6 +961,19 @@ fun KeypadRow(
             val interactionSource = remember { MutableInteractionSource() }
 
             val isPressed by interactionSource.collectIsPressedAsState()
+            var repeatedBackspace by remember(key) { mutableStateOf(false) }
+
+            LaunchedEffect(isPressed, key) {
+                if (key == "backspace" && isPressed) {
+                    repeatedBackspace = false
+                    delay(350)
+                    repeatedBackspace = true
+                    while (true) {
+                        onKeyClick(key)
+                        delay(65)
+                    }
+                }
+            }
 
             val targetColor = if (isPressed) {
                 MaterialTheme.colorScheme.primaryContainer
@@ -985,8 +999,12 @@ fun KeypadRow(
 
             FilledTonalButton(
                 onClick = {
-                    if (!disableHaptics) vibrate(context, 100)
-                    onKeyClick(key)
+                    if (key == "backspace" && repeatedBackspace) {
+                        repeatedBackspace = false
+                    } else {
+                        if (!disableHaptics) vibrate(context, 100)
+                        onKeyClick(key)
+                    }
                 },
                 modifier = Modifier.size(buttonSize),
                 interactionSource = interactionSource,

@@ -49,7 +49,24 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
+
+        <activity
+            android:name=".features.routines.RoutineEnableActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoDisplay" />
+
+        <activity
+            android:name=".features.routines.RoutineDisableActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true"
+            android:theme="@style/Theme.AppLock" />
 
         <activity
             android:name=".features.lockscreen.ui.PasswordOverlayActivity"
@@ -61,13 +78,11 @@
             android:taskAffinity=""
             android:theme="@android:style/Theme.Material.NoActionBar.TranslucentDecor" />
 
-
         <activity
             android:name=".features.lockscreen.ui.TransparentBiometricActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleInstance" />
-
 
         <activity
             android:name=".features.admin.AdminDisableActivity"
@@ -138,7 +153,6 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-
 
         <provider
             android:name="androidx.core.content.FileProvider"

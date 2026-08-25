@@ -152,7 +152,7 @@ class ShizukuAppLockService : Service() {
     private fun createNotificationChannel() {
         val serviceChannel = NotificationChannel(
             CHANNEL_ID,
-            "AppLock Service",
+            getString(R.string.service_channel_applock),
             NotificationManager.IMPORTANCE_DEFAULT
         )
         notificationManager.createNotificationChannel(serviceChannel)
@@ -160,8 +160,8 @@ class ShizukuAppLockService : Service() {
 
     private fun createNotification(): Notification {
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("AppLock")
-            .setContentText("Protecting your apps with Shizuku")
+            .setContentTitle(getString(R.string.service_notification_title))
+            .setContentText(getString(R.string.service_notification_shizuku_text))
             .setSmallIcon(R.drawable.baseline_shield_24)
             .setPriority(NotificationCompat.PRIORITY_MIN)
             .setOngoing(true)

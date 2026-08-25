@@ -182,9 +182,9 @@ fun PatternSetPasswordScreen(
                     title = {
                         Text(
                             text = when {
-                                isVerifyOldPasswordMode -> stringResource(R.string.enter_current_pin_title)
-                                isConfirmationMode -> stringResource(R.string.confirm_pin_title)
-                                else -> stringResource(R.string.set_new_pin_title)
+                                isVerifyOldPasswordMode -> stringResource(R.string.pattern_enter_current_title)
+                                isConfirmationMode -> stringResource(R.string.pattern_confirm_title)
+                                else -> stringResource(R.string.pattern_create_title)
                             },
                             style = MaterialTheme.typography.titleMediumEmphasized,
                         )
@@ -213,9 +213,9 @@ fun PatternSetPasswordScreen(
                 ) {
                     Text(
                         text = when {
-                            isVerifyOldPasswordMode -> "Enter current Pattern"
-                            isConfirmationMode -> "Confirm pattern"
-                            else -> "Create a pattern"
+                            isVerifyOldPasswordMode -> stringResource(R.string.pattern_enter_current_title)
+                            isConfirmationMode -> stringResource(R.string.pattern_confirm_title)
+                            else -> stringResource(R.string.pattern_create_title)
                         },
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center
@@ -225,7 +225,7 @@ fun PatternSetPasswordScreen(
 
                     if (showMismatchError) {
                         Text(
-                            text = "Incorrect Pattern",
+                            text = stringResource(R.string.pattern_incorrect_error),
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.bodySmall,
                             textAlign = TextAlign.Center
@@ -233,7 +233,7 @@ fun PatternSetPasswordScreen(
                     }
                     if (showMinLengthError) {
                         Text(
-                            text = "Patter length should be at least 4",
+                            text = stringResource(R.string.pattern_min_length_error),
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.bodySmall,
                             textAlign = TextAlign.Center
@@ -241,7 +241,7 @@ fun PatternSetPasswordScreen(
                     }
                     if (showInvalidOldPasswordError) {
                         Text(
-                            text = "Incorrect pattern",
+                            text = stringResource(R.string.pattern_incorrect_error),
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.bodySmall,
                             textAlign = TextAlign.Center
@@ -358,9 +358,9 @@ fun PatternSetPasswordScreen(
                 ) {
                     Text(
                         text = when {
-                            isVerifyOldPasswordMode -> stringResource(R.string.enter_current_pin_label)
-                            isConfirmationMode -> stringResource(R.string.confirm_new_pin_label)
-                            else -> stringResource(R.string.create_new_pin_label)
+                            isVerifyOldPasswordMode -> stringResource(R.string.pattern_enter_current_title)
+                            isConfirmationMode -> stringResource(R.string.pattern_confirm_title)
+                            else -> stringResource(R.string.pattern_create_title)
                         },
                         style = MaterialTheme.typography.headlineMedium,
                         textAlign = TextAlign.Center
@@ -379,7 +379,7 @@ fun PatternSetPasswordScreen(
                     if (showMinLengthError) {
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Patter length should be at least 4",
+                            text = stringResource(R.string.pattern_min_length_error),
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.labelLarge,
                             textAlign = TextAlign.Center
@@ -389,7 +389,7 @@ fun PatternSetPasswordScreen(
                     if (showInvalidOldPasswordError) {
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Incorrect pattern",
+                            text = stringResource(R.string.pattern_incorrect_error),
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.labelLarge,
                             textAlign = TextAlign.Center

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="close_cd">닫기</string>
+    <string name="continue_to_app">%1$s로 계속</string>
+    <string name="main_protection_on">켜짐</string>
+    <string name="main_protection_off">꺼짐</string>
+    <string name="main_trigger_exclusions_cd">트리거 제외</string>
+    <string name="main_anti_uninstall_cd">삭제 방지</string>
+    <string name="main_add_apps_cd">보호할 앱 추가</string>
+    <string name="main_no_protected_apps_title">보호된 앱 없음</string>
+    <string name="main_no_protected_apps_desc">+ 버튼을 눌러 보호할 앱을 추가하세요.</string>
+    <string name="main_select_apps_title">앱 선택</string>
+    <string name="main_protect_count">보호 (%1$d)</string>
+    <string name="main_protected_label">보호됨</string>
+    <string name="main_unlock_app_cd">%1$s 잠금 해제</string>
+    <string name="warning_cd">경고</string>
+    <string name="settings_unknown_version">알 수 없음</string>
+    <string name="settings_until_screen_off">화면이 꺼질 때까지</string>
+    <string name="settings_share_audit_logs">보안 로그 공유</string>
+    <string name="settings_share_logs">로그 공유</string>
+    <string name="settings_logging_title">로깅</string>
+    <string name="settings_logging_desc">문제 해결을 위한 디버그 로그를 기록합니다.</string>
+    <string name="settings_links_title">링크</string>
+    <string name="settings_discord_community_title">Discord 커뮤니티</string>
+    <string name="settings_report_issue_title">문제 신고</string>
+    <string name="common_manual_packages_title">직접 추가한 패키지</string>
+    <string name="common_installed_apps_title">설치된 앱</string>
+    <string name="common_add_package_manually_title">패키지 직접 추가</string>
+    <string name="common_package_name">패키지 이름</string>
+    <string name="common_add_button">추가</string>
+    <string name="common_search_apps_packages">앱 또는 패키지 이름 검색…</string>
+    <string name="common_manually_added_package">직접 추가한 패키지</string>
+    <string name="common_add_package_manually_cd">패키지 직접 추가</string>
+    <string name="anti_uninstall_select_apps_desc">삭제되지 않도록 보호할 앱을 선택하세요.</string>
+    <string name="anti_uninstall_enter_package_desc">보호할 앱의 패키지 이름을 입력하세요.</string>
+    <string name="shizuku_not_installed_title">Shizuku가 설치되지 않음</string>
+    <string name="shizuku_not_running_title">Shizuku가 실행 중이 아님</string>
+    <string name="shizuku_setup_title">Shizuku 설정</string>
+    <string name="shizuku_not_installed_desc">루트 없이 삭제 방지 보호를 설정하려면 Shizuku가 필요합니다.
+
+계속하려면 Shizuku를 설치하세요.</string>
+    <string name="shizuku_not_running_desc">Shizuku는 설치되어 있지만 백그라운드 서비스가 아직 시작되지 않았습니다.
+
+Shizuku를 열고 무선 디버깅 또는 Root로 서비스를 시작하세요.</string>
+    <string name="shizuku_permission_desc">Shizuku가 실행 중이지만 패키지 제한을 설정하려면 App Lock 권한이 필요합니다.
+
+Shizuku는 앱 삭제 차단 또는 해제 작업을 할 때만 사용됩니다.</string>
+    <string name="install_shizuku_button">Shizuku 설치</string>
+    <string name="open_shizuku_button">Shizuku 열기</string>
+    <string name="go_back_button">돌아가기</string>
+    <string name="trigger_exclusions_title">트리거 제외</string>
+    <string name="trigger_exclusions_desc">잠긴 앱으로 전환할 때 잠금 화면을 발생시키지 않을 앱을 선택하세요.</string>
+    <string name="trigger_exclusions_enter_package_desc">제외할 앱의 패키지 이름을 입력하세요.</string>
+    <string name="pattern_enter_current_title">현재 패턴 입력</string>
+    <string name="pattern_confirm_title">패턴 확인</string>
+    <string name="pattern_create_title">새 패턴 만들기</string>
+    <string name="pattern_incorrect_error">패턴이 올바르지 않습니다.</string>
+    <string name="pattern_min_length_error">패턴은 최소 4개 점을 연결해야 합니다.</string>
+    <string name="battery_optimization_request_sent">배터리 최적화 제외 요청을 보냈습니다.</string>
+    <string name="battery_settings_open_failed">배터리 설정을 열지 못했습니다.</string>
+    <string name="battery_settings_configure_app">배터리 설정에서 App Lock을 찾아 설정해 주세요.</string>
+    <string name="service_channel_applock">App Lock 서비스</string>
+    <string name="service_channel_usage_stats">App Lock 서비스 (사용량 접근)</string>
+    <string name="service_notification_title">App Lock</string>
+    <string name="service_notification_shizuku_text">Shizuku로 앱을 보호하고 있습니다.</string>
+    <string name="service_notification_protecting_text">앱을 보호하고 있습니다.</string>
+    <string name="usage_stats_permission_title">사용량 접근 권한 허용</string>
+    <string name="usage_stats_permission_desc">사용량 통계 모드를 사용하려면 사용량 접근 권한이 필요합니다.</string>
+    <string name="usage_stats_permission_instruction">권한 허용을 눌러 설정을 열고 사용량 접근을 허용해 주세요.</string>
+</resources>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="close_cd">Close</string>
+    <string name="continue_to_app">Continue to %1$s</string>
+    <string name="main_protection_on">ON</string>
+    <string name="main_protection_off">OFF</string>
+    <string name="main_trigger_exclusions_cd">Trigger exclusions</string>
+    <string name="main_anti_uninstall_cd">Anti-Uninstall</string>
+    <string name="main_add_apps_cd">Add protected apps</string>
+    <string name="main_no_protected_apps_title">No Protected Apps</string>
+    <string name="main_no_protected_apps_desc">Tap the + button to selectively secure your apps.</string>
+    <string name="main_select_apps_title">Select Apps</string>
+    <string name="main_protect_count">Protect (%1$d)</string>
+    <string name="main_protected_label">Protected</string>
+    <string name="main_unlock_app_cd">Unlock %1$s</string>
+    <string name="warning_cd">Warning</string>
+    <string name="settings_unknown_version">Unknown</string>
+    <string name="settings_until_screen_off">Until screen off</string>
+    <string name="settings_share_audit_logs">Share audit logs</string>
+    <string name="settings_share_logs">Share logs</string>
+    <string name="settings_logging_title">Logging</string>
+    <string name="settings_logging_desc">Enable debug logging for troubleshooting</string>
+    <string name="settings_links_title">Links</string>
+    <string name="settings_discord_community_title">Discord Community</string>
+    <string name="settings_report_issue_title">Report Issue</string>
+    <string name="common_manual_packages_title">Manually Added Packages</string>
+    <string name="common_installed_apps_title">Installed Apps</string>
+    <string name="common_add_package_manually_title">Add Package Manually</string>
+    <string name="common_package_name">Package Name</string>
+    <string name="common_add_button">Add</string>
+    <string name="common_search_apps_packages">Search apps or package names…</string>
+    <string name="common_manually_added_package">Manually added package</string>
+    <string name="common_add_package_manually_cd">Add package manually</string>
+    <string name="anti_uninstall_select_apps_desc">Select apps that will be protected from uninstallation.</string>
+    <string name="anti_uninstall_enter_package_desc">Enter the package name of the app you want to protect:</string>
+    <string name="shizuku_not_installed_title">Shizuku Not Installed</string>
+    <string name="shizuku_not_running_title">Shizuku Not Running</string>
+    <string name="shizuku_setup_title">Shizuku Setup</string>
+    <string name="shizuku_not_installed_desc">Shizuku is required to configure Anti-Uninstall protection without root.
+
+Install Shizuku from the Play Store or GitHub to continue.</string>
+    <string name="shizuku_not_running_desc">Shizuku is installed, but its background service has not started yet.
+
+Open Shizuku and start the service using Wireless Debugging or Root.</string>
+    <string name="shizuku_permission_desc">Shizuku is active, but App Lock needs permission to configure package restrictions.
+
+Shizuku is only used when blocking or unblocking uninstall operations.</string>
+    <string name="install_shizuku_button">Install Shizuku</string>
+    <string name="open_shizuku_button">Open Shizuku</string>
+    <string name="go_back_button">Go Back</string>
+    <string name="trigger_exclusions_title">Trigger Exclusions</string>
+    <string name="trigger_exclusions_desc">Select apps that will not trigger locks when switching to locked apps.</string>
+    <string name="trigger_exclusions_enter_package_desc">Enter the package name of the app you want to exclude:</string>
+    <string name="pattern_enter_current_title">Enter current pattern</string>
+    <string name="pattern_confirm_title">Confirm pattern</string>
+    <string name="pattern_create_title">Create a pattern</string>
+    <string name="pattern_incorrect_error">Incorrect pattern</string>
+    <string name="pattern_min_length_error">Pattern must contain at least 4 dots.</string>
+    <string name="battery_optimization_request_sent">Battery optimization request sent.</string>
+    <string name="battery_settings_open_failed">Failed to open battery settings.</string>
+    <string name="battery_settings_configure_app">Find App Lock in battery settings and configure it.</string>
+    <string name="service_channel_applock">App Lock Service</string>
+    <string name="service_channel_usage_stats">App Lock Service (Usage Stats)</string>
+    <string name="service_notification_title">App Lock</string>
+    <string name="service_notification_shizuku_text">Protecting your apps with Shizuku</string>
+    <string name="service_notification_protecting_text">Protecting your apps</string>
+    <string name="usage_stats_permission_title">Grant Usage Access</string>
+    <string name="usage_stats_permission_desc">Usage Statistics mode requires usage access permission to work properly.</string>
+    <string name="usage_stats_permission_instruction">Tap Grant Permission to open Settings and allow usage access.</string>
+</resources>
