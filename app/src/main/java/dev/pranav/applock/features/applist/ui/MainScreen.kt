@@ -90,6 +90,7 @@ fun MainScreen(
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
                 val appLockRepository = context.appLockRepository()
+                applockEnabled = appLockRepository.isProtectEnabled()
                 val backend = appLockRepository.getBackendImplementation()
                 val isAntiUninstallEnabled = appLockRepository.isAntiUninstallEnabled()
                 val dpm =
@@ -183,7 +184,7 @@ fun MainScreen(
                             )
                             Spacer(Modifier.width(6.dp))
                             Text(
-                                text = if (applockEnabled) "ON" else "OFF",
+                                text = if (applockEnabled) stringResource(R.string.main_protection_on) else stringResource(R.string.main_protection_off),
                                 style = MaterialTheme.typography.labelLarge,
                                 color = if (applockEnabled) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -211,7 +212,7 @@ fun MainScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Block,
-                            contentDescription = "Trigger exclusions",
+                            contentDescription = stringResource(R.string.main_trigger_exclusions_cd),
                             tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
@@ -224,7 +225,7 @@ fun MainScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Lock,
-                            contentDescription = "Anti-Uninstall",
+                            contentDescription = stringResource(R.string.main_anti_uninstall_cd),
                             tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
@@ -244,7 +245,7 @@ fun MainScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(R.string.main_screen_search_cd) // Update ideally
+                        contentDescription = stringResource(R.string.main_add_apps_cd)
                     )
                 }
             }
@@ -432,13 +433,13 @@ private fun EmptyDashboardState(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "No Protected Apps",
+            text = stringResource(R.string.main_no_protected_apps_title),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Tap the + button to selectively secure your apps.",
+            text = stringResource(R.string.main_no_protected_apps_desc),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = androidx.compose.ui.text.style.TextAlign.Center,
@@ -496,7 +497,7 @@ private fun AddProtectedAppsSheetContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Select Apps",
+                text = stringResource(R.string.main_select_apps_title),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
@@ -504,7 +505,7 @@ private fun AddProtectedAppsSheetContent(
                 onClick = onSave,
                 enabled = selectedPackages.isNotEmpty()
             ) {
-                Text("Protect (${selectedPackages.size})")
+                Text(stringResource(R.string.main_protect_count, selectedPackages.size))
             }
         }
 
@@ -593,7 +594,7 @@ private fun ProtectedAppItem(
         },
         supportingContent = {
             Text(
-                text = "Protected",
+                text = stringResource(R.string.main_protected_label),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,
@@ -624,7 +625,7 @@ private fun ProtectedAppItem(
             IconButton(onClick = onUnlock) {
                 Icon(
                     imageVector = Icons.Outlined.LockOpen,
-                    contentDescription = "Unlock ${appName ?: "app"}",
+                    contentDescription = stringResource(R.string.main_unlock_app_cd, appName ?: stringResource(R.string.default_app_name)),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
@@ -811,7 +812,7 @@ private fun PermissionWarningBanner(
         ) {
             Icon(
                 imageVector = Icons.Rounded.Warning,
-                contentDescription = "Warning",
+                contentDescription = stringResource(R.string.warning_cd),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(28.dp)
             )

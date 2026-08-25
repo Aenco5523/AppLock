@@ -53,6 +53,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -63,6 +64,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import dev.pranav.applock.R
 import dev.pranav.applock.core.utils.appLockRepository
 import dev.pranav.applock.core.utils.blockUninstallForUser
 import dev.pranav.applock.core.utils.unblockUninstallForUser
@@ -263,7 +265,7 @@ fun AntiUninstallScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             SearchTopBar(
-                title = "Anti-Uninstall Protection",
+                title = stringResource(R.string.settings_screen_anti_uninstall_title),
                 searchQuery = searchQuery,
                 onSearchQueryChange = viewModel::updateSearchQuery,
                 onBack = { navController.navigateUp() },
@@ -283,7 +285,7 @@ fun AntiUninstallScreen(
         ) {
             item {
                 Text(
-                    text = "Select apps that will be protected from uninstallation.",
+                    text = stringResource(R.string.anti_uninstall_select_apps_desc),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -310,7 +312,7 @@ fun AntiUninstallScreen(
                 if (protectedNotInList.isNotEmpty()) {
                     item {
                         Text(
-                            text = "Manually Added Packages",
+                            text = stringResource(R.string.common_manual_packages_title),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.padding(bottom = 4.dp)
@@ -324,7 +326,7 @@ fun AntiUninstallScreen(
                     }
                     item {
                         Text(
-                            text = "Installed Apps",
+                            text = stringResource(R.string.common_installed_apps_title),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
@@ -347,18 +349,18 @@ fun AntiUninstallScreen(
         AlertDialog(
             onDismissRequest = { showManualAddDialog.value = false },
             properties = DialogProperties(usePlatformDefaultWidth = false),
-            title = { Text("Add Package Manually") },
+            title = { Text(stringResource(R.string.common_add_package_manually_title)) },
             text = {
                 Column(Modifier.fillMaxWidth(0.8f)) {
                     Text(
-                        text = "Enter the package name of the app you want to protect:",
+                        text = stringResource(R.string.anti_uninstall_enter_package_desc),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
                     OutlinedTextField(
                         value = manualPackageName,
                         onValueChange = viewModel::updateManualPackageName,
-                        label = { Text("Package Name") },
+                        label = { Text(stringResource(R.string.common_package_name)) },
                         placeholder = { Text("com.example.app") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true
@@ -372,10 +374,10 @@ fun AntiUninstallScreen(
                         showManualAddDialog.value = false
                     },
                     enabled = manualPackageName.isNotBlank()
-                ) { Text("Add") }
+                ) { Text(stringResource(R.string.common_add_button)) }
             },
             dismissButton = {
-                TextButton(onClick = { showManualAddDialog.value = false }) { Text("Cancel") }
+                TextButton(onClick = { showManualAddDialog.value = false }) { Text(stringResource(R.string.cancel_button)) }
             }
         )
     }
@@ -391,10 +393,10 @@ fun AntiUninstallScreen(
             title = {
                 Text(
                     text = when (shizukuState) {
-                        ShizukuState.NOT_INSTALLED -> "Shizuku Not Installed"
-                        ShizukuState.NOT_RUNNING -> "Shizuku Not Running"
-                        ShizukuState.PERMISSION_DENIED -> "Permission Required"
-                        else -> "Shizuku Setup"
+                        ShizukuState.NOT_INSTALLED -> stringResource(R.string.shizuku_not_installed_title)
+                        ShizukuState.NOT_RUNNING -> stringResource(R.string.shizuku_not_running_title)
+                        ShizukuState.PERMISSION_DENIED -> stringResource(R.string.settings_screen_permission_required_dialog_title)
+                        else -> stringResource(R.string.shizuku_setup_title)
                     }
                 )
             },
@@ -402,9 +404,9 @@ fun AntiUninstallScreen(
                 Column(Modifier.fillMaxWidth(0.8f)) {
                     Text(
                         text = when (shizukuState) {
-                            ShizukuState.NOT_INSTALLED -> "Shizuku is required to configure Anti-Uninstall protection without root.\n\nPlease install Shizuku from the Play Store or GitHub to continue."
-                            ShizukuState.NOT_RUNNING -> "Shizuku is installed, but the background service has not been started yet (Binder hasn't been received).\n\nPlease open the Shizuku application and start the service via Wireless Debugging or Root."
-                            ShizukuState.PERMISSION_DENIED -> "Shizuku is active, but this application needs your permission authorization to configure package restrictions.\n\nThankfully, Shizuku is only used while blocking/unblocking uninstalls, so it doesn't need to stay running forever!"
+                            ShizukuState.NOT_INSTALLED -> stringResource(R.string.shizuku_not_installed_desc)
+                            ShizukuState.NOT_RUNNING -> stringResource(R.string.shizuku_not_running_desc)
+                            ShizukuState.PERMISSION_DENIED -> stringResource(R.string.shizuku_permission_desc)
                             else -> ""
                         },
                         style = MaterialTheme.typography.bodyMedium
@@ -441,10 +443,10 @@ fun AntiUninstallScreen(
                 ) {
                     Text(
                         text = when (shizukuState) {
-                            ShizukuState.NOT_INSTALLED -> "Install Shizuku"
-                            ShizukuState.NOT_RUNNING -> "Open Shizuku"
-                            ShizukuState.PERMISSION_DENIED -> "Grant Permission"
-                            else -> "Confirm"
+                            ShizukuState.NOT_INSTALLED -> stringResource(R.string.install_shizuku_button)
+                            ShizukuState.NOT_RUNNING -> stringResource(R.string.open_shizuku_button)
+                            ShizukuState.PERMISSION_DENIED -> stringResource(R.string.grant_permission_button)
+                            else -> stringResource(R.string.confirm_button)
                         }
                     )
                 }
@@ -452,7 +454,7 @@ fun AntiUninstallScreen(
             dismissButton = {
                 TextButton(onClick = {
                     navController.popBackStack()
-                }) { Text("Go Back") }
+                }) { Text(stringResource(R.string.go_back_button)) }
             }
         )
     }
@@ -484,7 +486,7 @@ private fun SearchTopBar(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onBack) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.settings_screen_back_cd))
                 }
                 Text(
                     text = title,
@@ -492,7 +494,7 @@ private fun SearchTopBar(
                     modifier = Modifier.weight(1f)
                 )
                 IconButton(onClick = onAdd) {
-                    Icon(Icons.Default.Add, contentDescription = "Add package manually")
+                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.common_add_package_manually_cd))
                 }
             }
 
@@ -505,7 +507,7 @@ private fun SearchTopBar(
                 OutlinedTextField(
                     value = searchQuery,
                     onValueChange = onSearchQueryChange,
-                    placeholder = { Text("Search apps or package names...") },
+                    placeholder = { Text(stringResource(R.string.common_search_apps_packages)) },
                     leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
@@ -593,7 +595,7 @@ private fun ManualPackageItem(packageName: String, onToggle: () -> Unit) {
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = "Manually added package",
+                    text = stringResource(R.string.common_manually_added_package),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

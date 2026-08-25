@@ -232,7 +232,7 @@ fun SettingsScreen(
                         null
                     }
                 }
-                val versionName = packageInfo?.versionName ?: "Unknown"
+                val versionName = packageInfo?.versionName ?: context.getString(R.string.settings_unknown_version)
                 Text(
                     text = stringResource(R.string.settings_screen_version_template, versionName),
                     style = MaterialTheme.typography.bodyMedium,
@@ -320,7 +320,7 @@ fun SettingsScreen(
                             icon = Timer,
                             title = stringResource(R.string.settings_screen_unlock_duration_title),
                             subtitle = if (unlockTimeDuration > 0) {
-                                if (unlockTimeDuration > 10_000) "Until screen off"
+                                if (unlockTimeDuration > 10_000) stringResource(R.string.settings_until_screen_off)
                                 else stringResource(
                                     R.string.settings_screen_unlock_duration_summary_minutes,
                                     unlockTimeDuration
@@ -388,7 +388,7 @@ fun SettingsScreen(
                                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                                     }
                                     context.startActivity(
-                                        Intent.createChooser(shareIntent, "Share audit logs")
+                                        Intent.createChooser(shareIntent, context.getString(R.string.settings_share_audit_logs))
                                     )
                                 } else {
                                     Toast.makeText(
@@ -412,7 +412,7 @@ fun SettingsScreen(
                                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                                     }
                                     context.startActivity(
-                                        Intent.createChooser(shareIntent, "Share logs")
+                                        Intent.createChooser(shareIntent, context.getString(R.string.settings_share_logs))
                                     )
                                 } else {
                                     Toast.makeText(
@@ -425,8 +425,8 @@ fun SettingsScreen(
                         ),
                         ToggleSettingItem(
                             icon = Icons.Default.Troubleshoot,
-                            title = "Logging",
-                            subtitle = "Enable debug logging for troubleshooting",
+                            title = stringResource(R.string.settings_logging_title),
+                            subtitle = stringResource(R.string.settings_logging_desc),
                             checked = loggingEnabled,
                             enabled = true,
                             onCheckedChange = { isChecked ->
@@ -725,7 +725,7 @@ fun UnlockTimeDurationDialog(
                                     duration
                                 )
                                 60 -> stringResource(R.string.settings_screen_unlock_duration_dialog_option_hour)
-                                Integer.MAX_VALUE -> "Until Screen Off"
+                                Integer.MAX_VALUE -> stringResource(R.string.settings_until_screen_off)
                                 else -> stringResource(
                                     R.string.settings_screen_unlock_duration_summary_minutes,
                                     duration
@@ -904,19 +904,21 @@ fun BackendSelectionItem(
     )
 }
 
+@Composable
 private fun getBackendDisplayName(backend: BackendImplementation): String {
     return when (backend) {
-        BackendImplementation.ACCESSIBILITY -> "Accessibility Service"
-        BackendImplementation.USAGE_STATS -> "Usage Statistics"
-        BackendImplementation.SHIZUKU -> "Shizuku Service"
+        BackendImplementation.ACCESSIBILITY -> stringResource(R.string.settings_screen_backend_implementation_accessibility_title)
+        BackendImplementation.USAGE_STATS -> stringResource(R.string.settings_screen_backend_implementation_usage_stats_title)
+        BackendImplementation.SHIZUKU -> stringResource(R.string.settings_screen_backend_implementation_shizuku_title)
     }
 }
 
+@Composable
 private fun getBackendDescription(backend: BackendImplementation): String {
     return when (backend) {
-        BackendImplementation.ACCESSIBILITY -> "Standard method that works on most devices"
-        BackendImplementation.USAGE_STATS -> "Experimental method using app usage statistics"
-        BackendImplementation.SHIZUKU -> "Advanced method using Shizuku and internal APIs"
+        BackendImplementation.ACCESSIBILITY -> stringResource(R.string.settings_screen_backend_implementation_accessibility_desc)
+        BackendImplementation.USAGE_STATS -> stringResource(R.string.settings_screen_backend_implementation_usage_stats_desc)
+        BackendImplementation.SHIZUKU -> stringResource(R.string.settings_screen_backend_implementation_shizuku_desc)
     }
 }
 
@@ -1015,12 +1017,12 @@ fun LinksSection() {
     val context = LocalContext.current
 
     Column {
-        SectionTitle(text = "Links")
+        SectionTitle(text = stringResource(R.string.settings_links_title))
 
         Column {
             SettingsCard(index = 0, listSize = 3) {
                 LinkItem(
-                    title = "Discord Community",
+                    title = stringResource(R.string.settings_discord_community_title),
                     icon = Discord,
                     onClick = {
                         val intent = Intent(
@@ -1034,7 +1036,7 @@ fun LinksSection() {
 
             SettingsCard(index = 1, listSize = 3) {
                 LinkItem(
-                    title = "Source Code",
+                    title = stringResource(R.string.settings_screen_source_code_title),
                     icon = Icons.Outlined.Code,
                     onClick = {
                         val intent = Intent(
@@ -1048,7 +1050,7 @@ fun LinksSection() {
 
             SettingsCard(index = 2, listSize = 3) {
                 LinkItem(
-                    title = "Report Issue",
+                    title = stringResource(R.string.settings_report_issue_title),
                     icon = Icons.Outlined.BugReport,
                     onClick = {
                         val intent = Intent(
