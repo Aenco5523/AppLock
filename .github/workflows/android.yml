@@ -2,11 +2,8 @@ name: Android CI
 
 on:
   push:
-    branches:
-      - feature/samsung-routines
-
-permissions:
-  contents: write
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -15,68 +12,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
-        with:
-          fetch-depth: 0
-
-      - name: Apply remaining localization patch
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-
-          def replace(path, old, new, expected=1):
-              p = Path(path)
-              s = p.read_text(encoding='utf-8')
-              count = s.count(old)
-              if count != expected:
-                  raise RuntimeError(f'{path}: expected {expected} match(es), got {count}: {old!r}')
-              p.write_text(s.replace(old, new), encoding='utf-8')
-              print(f'{path}: replaced {count}')
-
-          # Battery optimization toast messages.
-          p = 'app/src/main/java/dev/pranav/applock/core/utils/AppLockUtils.kt'
-          replace(p, 'import dev.pranav.applock.AppLockApplication\n', 'import dev.pranav.applock.AppLockApplication\nimport dev.pranav.applock.R\n')
-          replace(p, 'showBatteryOptimizationToast(context, "Battery optimization request sent")', 'showBatteryOptimizationToast(context, context.getString(R.string.battery_optimization_request_sent))')
-          replace(p, 'showBatteryOptimizationToast(context, "Failed to open battery settings")', 'showBatteryOptimizationToast(context, context.getString(R.string.battery_settings_open_failed))')
-          replace(p, '            "Please find and configure this app in battery settings"', '            context.getString(R.string.battery_settings_configure_app)')
-
-          # Shizuku foreground notification, including the notification-channel label.
-          p = 'app/src/main/java/dev/pranav/applock/services/ShizukuAppLockService.kt'
-          replace(p, '            "AppLock Service",', '            getString(R.string.service_channel_applock),')
-          replace(p, '            .setContentTitle("AppLock")', '            .setContentTitle(getString(R.string.service_notification_title))')
-          replace(p, '            .setContentText("Protecting your apps with Shizuku")', '            .setContentText(getString(R.string.service_notification_shizuku_text))')
-
-          # Usage-stats foreground notification.
-          p = 'app/src/main/java/dev/pranav/applock/services/UsageLockService.kt'
-          replace(p, '            "AppLock Service (Usage Stats)",', '            getString(R.string.service_channel_usage_stats),')
-          replace(p, '            .setContentTitle("App Lock")', '            .setContentTitle(getString(R.string.service_notification_title))')
-          replace(p, '            .setContentText("Protecting your apps")', '            .setContentText(getString(R.string.service_notification_protecting_text))')
-
-          # Usage access dialog had an entire English block hard-coded.
-          p = 'app/src/main/java/dev/pranav/applock/ui/components/UsageStatsPermission.kt'
-          replace(p, 'import androidx.compose.ui.Modifier\n', 'import androidx.compose.ui.Modifier\nimport androidx.compose.ui.res.stringResource\n')
-          replace(p, 'import androidx.compose.ui.window.DialogProperties\n', 'import androidx.compose.ui.window.DialogProperties\nimport dev.pranav.applock.R\n')
-          replace(p, '                text = "Grant Usage Stats Permission",', '                text = stringResource(R.string.usage_stats_permission_title),')
-          replace(p, '                    text = "You\'ve enabled Usage Stats mode, but the app requires Uage access permission to function properly.",', '                    text = stringResource(R.string.usage_stats_permission_desc),')
-          replace(p, '                    text = "Press \'Grant Permission\' to open the settings and grant the necessary permissions.",', '                    text = stringResource(R.string.usage_stats_permission_instruction),')
-          replace(p, '                Text("Grant Permission")', '                Text(stringResource(R.string.grant_permission_button))')
-          replace(p, '                Text("Cancel")', '                Text(stringResource(R.string.cancel_button))')
-
-          en = Path('app/src/main/res/values/localization_extra.xml')
-          ko = Path('app/src/main/res/values-ko/localization_extra.xml')
-
-          en_add = '''    <string name="battery_optimization_request_sent">Battery optimization request sent.</string>\n    <string name="battery_settings_open_failed">Failed to open battery settings.</string>\n    <string name="battery_settings_configure_app">Find App Lock in battery settings and configure it.</string>\n    <string name="service_channel_applock">App Lock Service</string>\n    <string name="service_channel_usage_stats">App Lock Service (Usage Stats)</string>\n    <string name="service_notification_title">App Lock</string>\n    <string name="service_notification_shizuku_text">Protecting your apps with Shizuku</string>\n    <string name="service_notification_protecting_text">Protecting your apps</string>\n    <string name="usage_stats_permission_title">Grant Usage Access</string>\n    <string name="usage_stats_permission_desc">Usage Statistics mode requires usage access permission to work properly.</string>\n    <string name="usage_stats_permission_instruction">Tap Grant Permission to open Settings and allow usage access.</string>\n'''
-          ko_add = '''    <string name="battery_optimization_request_sent">배터리 최적화 제외 요청을 보냈습니다.</string>\n    <string name="battery_settings_open_failed">배터리 설정을 열지 못했습니다.</string>\n    <string name="battery_settings_configure_app">배터리 설정에서 App Lock을 찾아 설정해 주세요.</string>\n    <string name="service_channel_applock">App Lock 서비스</string>\n    <string name="service_channel_usage_stats">App Lock 서비스 (사용량 접근)</string>\n    <string name="service_notification_title">App Lock</string>\n    <string name="service_notification_shizuku_text">Shizuku로 앱을 보호하고 있습니다.</string>\n    <string name="service_notification_protecting_text">앱을 보호하고 있습니다.</string>\n    <string name="usage_stats_permission_title">사용량 접근 권한 허용</string>\n    <string name="usage_stats_permission_desc">사용량 통계 모드를 사용하려면 사용량 접근 권한이 필요합니다.</string>\n    <string name="usage_stats_permission_instruction">권한 허용을 눌러 설정을 열고 사용량 접근을 허용해 주세요.</string>\n'''
-
-          for path, addition in [(en, en_add), (ko, ko_add)]:
-              s = path.read_text(encoding='utf-8')
-              if 'battery_optimization_request_sent' in s:
-                  raise RuntimeError(f'{path}: localization keys already present')
-              path.write_text(s.replace('</resources>', addition + '</resources>'), encoding='utf-8')
-
-          # Restore normal workflow in the verified patch commit.
-          Path('.github/workflows/android.yml').write_text('''name: Android CI\n\non:\n  push:\n  pull_request:\n  workflow_dispatch:\n\njobs:\n  build:\n    runs-on: ubuntu-latest\n\n    steps:\n      - name: Checkout repository\n        uses: actions/checkout@v4.2.2\n\n      - name: Set up JDK 17\n        uses: actions/setup-java@v4.7.1\n        with:\n          distribution: 'temurin'\n          java-version: '17'\n\n      - name: Give permission to executable\n        run: chmod +x gradlew\n\n      - name: Setup Android SDK\n        uses: android-actions/setup-android@v3.2.2\n\n      - name: Setup Gradle\n        uses: gradle/actions/setup-gradle@v4.4.1\n\n      - name: Build with gradle\n        run: ./gradlew clean assemble\n\n      - name: Upload debug apks\n        uses: actions/upload-artifact@v4.6.2\n        with:\n          name: app-debug\n          path: app/build/outputs/apk/debug\n\n      - name: Upload release apks\n        uses: actions/upload-artifact@v4.6.2\n        with:\n          name: app-release\n          path: app/build/outputs/apk/release\n''', encoding='utf-8')
-          PY
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4.7.1
@@ -95,16 +30,6 @@ jobs:
 
       - name: Build with gradle
         run: ./gradlew clean assemble
-
-      - name: Commit verified localization patch
-        if: success()
-        shell: bash
-        run: |
-          git config user.name "Aenco"
-          git config user.email "161310162+Aenco5523@users.noreply.github.com"
-          git add -A
-          git commit -m "Localize remaining permission and battery messages [skip ci]"
-          git push origin HEAD:feature/samsung-routines
 
       - name: Upload debug apks
         uses: actions/upload-artifact@v4.6.2

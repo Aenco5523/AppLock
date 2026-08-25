@@ -56,4 +56,15 @@ Shizuku는 앱 삭제 차단 또는 해제 작업을 할 때만 사용됩니다.
     <string name="pattern_create_title">새 패턴 만들기</string>
     <string name="pattern_incorrect_error">패턴이 올바르지 않습니다.</string>
     <string name="pattern_min_length_error">패턴은 최소 4개 점을 연결해야 합니다.</string>
+    <string name="battery_optimization_request_sent">배터리 최적화 제외 요청을 보냈습니다.</string>
+    <string name="battery_settings_open_failed">배터리 설정을 열지 못했습니다.</string>
+    <string name="battery_settings_configure_app">배터리 설정에서 App Lock을 찾아 설정해 주세요.</string>
+    <string name="service_channel_applock">App Lock 서비스</string>
+    <string name="service_channel_usage_stats">App Lock 서비스 (사용량 접근)</string>
+    <string name="service_notification_title">App Lock</string>
+    <string name="service_notification_shizuku_text">Shizuku로 앱을 보호하고 있습니다.</string>
+    <string name="service_notification_protecting_text">앱을 보호하고 있습니다.</string>
+    <string name="usage_stats_permission_title">사용량 접근 권한 허용</string>
+    <string name="usage_stats_permission_desc">사용량 통계 모드를 사용하려면 사용량 접근 권한이 필요합니다.</string>
+    <string name="usage_stats_permission_instruction">권한 허용을 눌러 설정을 열고 사용량 접근을 허용해 주세요.</string>
 </resources>

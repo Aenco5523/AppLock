@@ -56,4 +56,15 @@ Shizuku is only used when blocking or unblocking uninstall operations.</string>
     <string name="pattern_create_title">Create a pattern</string>
     <string name="pattern_incorrect_error">Incorrect pattern</string>
     <string name="pattern_min_length_error">Pattern must contain at least 4 dots.</string>
+    <string name="battery_optimization_request_sent">Battery optimization request sent.</string>
+    <string name="battery_settings_open_failed">Failed to open battery settings.</string>
+    <string name="battery_settings_configure_app">Find App Lock in battery settings and configure it.</string>
+    <string name="service_channel_applock">App Lock Service</string>
+    <string name="service_channel_usage_stats">App Lock Service (Usage Stats)</string>
+    <string name="service_notification_title">App Lock</string>
+    <string name="service_notification_shizuku_text">Protecting your apps with Shizuku</string>
+    <string name="service_notification_protecting_text">Protecting your apps</string>
+    <string name="usage_stats_permission_title">Grant Usage Access</string>
+    <string name="usage_stats_permission_desc">Usage Statistics mode requires usage access permission to work properly.</string>
+    <string name="usage_stats_permission_instruction">Tap Grant Permission to open Settings and allow usage access.</string>
 </resources>
